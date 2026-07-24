@@ -17,7 +17,6 @@ unsigned long lightDelays[5][3] = {
   {5000, 1000, 5000}   // West
 };
 
-// Traffic cycle state machine
 enum CycleState {
   ALL_RED,
   GREEN_ACTIVE,
@@ -34,7 +33,6 @@ struct SystemState {
   CycleState currentPhase = ALL_RED;
 } systemState;
 
-// Update direction names to match: "NORTH", "SW", "SE", "NW", "NE"
 const char* lightNames[5] = {"NORTH", "SW", "SE", "NW", "NE"};
 
 void setup() {
@@ -246,9 +244,9 @@ void setLightDelays(const String &data) {
 
   if (count == 15) {
     for (int i = 0; i < 5; i++) {
-      lightDelays[i][0] = max(values[i*3], 100);     // Min 100ms for Red
-      lightDelays[i][1] = max(values[i*3+1], 100);   // Min 100ms for Yellow
-      lightDelays[i][2] = max(values[i*3+2], 100);   // Min 100ms for Green
+      lightDelays[i][0] = max(values[i*3], 100);
+      lightDelays[i][1] = max(values[i*3+1], 100);
+      lightDelays[i][2] = max(values[i*3+2], 100);
     }
     Serial.println("Delays updated:");
     printCurrentDelays();
@@ -309,11 +307,11 @@ void sendLightStates() {
   for (int i = 0; i < 5; i++) {
     Serial.print(lightNames[i]);
     Serial.print(",");
-    Serial.print(digitalRead(lights[i][0]) ? "1" : "0"); // RED
+    Serial.print(digitalRead(lights[i][0]) ? "1" : "0");
     Serial.print(",");
-    Serial.print(digitalRead(lights[i][1]) ? "1" : "0"); // YELLOW
+    Serial.print(digitalRead(lights[i][1]) ? "1" : "0");
     Serial.print(",");
-    Serial.print(digitalRead(lights[i][2]) ? "1" : "0"); // GREEN
+    Serial.print(digitalRead(lights[i][2]) ? "1" : "0");
     if (i < 4) Serial.print(",");
   }
   Serial.println();
